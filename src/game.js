@@ -785,6 +785,23 @@ BasicGame.Game.prototype = {
 
 	this.showReturn = this.time.now + BasicGame.RETURN_MESSAGE_DELAY; 
 },
+
+damageFlash: function (sprite, duration, color) {
+  // Default to 100ms duration and white (ADD blend) if no color specified
+  duration = duration || 100;
+
+  if (color) {
+    sprite.tint = color;
+    this.time.events.add(duration, function () {
+      sprite.tint = 0xffffff;
+    }, this);
+  } else {
+    sprite.blendMode = PIXI.blendModes.ADD;
+    this.time.events.add(duration, function () {
+      sprite.blendMode = PIXI.blendModes.NORMAL;
+    }, this);
+  }
+},
   
   quitGame: function(pointer) {
 
